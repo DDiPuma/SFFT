@@ -19,13 +19,12 @@ w = zeros(size(x));
 
 J = find(u > 0.5);
 
-% TODO - check that these indices are valid
-% Does MATLAB require me to add 1 to these?
 for j=J
     a = u(j)/u_p(j);
     % TODO - check sigma^-1
     % By my understanding, that should not be an integer
     % That's going to be a problem in about 2 lines
+    % I assume inverse has some other meaning in modulo arithmetic
     i = sigma^-1 * mod(round(arg(a)*n/(2*pi)), n);
     v = round(u(j));
     w(i) = v
