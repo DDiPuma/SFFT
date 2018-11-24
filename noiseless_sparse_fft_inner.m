@@ -1,4 +1,4 @@
-function result = noiseless_sparse_fft_inner(x, kp, outer, alpha)
+function result = noiseless_sparse_fft_inner(x, kp, X_p, alpha)
 % Compute the inner rounds of an SFFT
 
 n = size(x);
@@ -15,8 +15,8 @@ rng(0, 'twister');
 sigma = 2*randi([0 n/2-1], 1, 1) + 1;
 b = randi([1 n], 1, 1);
 
-u = hash_to_bins(x, outer, sigma, 0, b, B, delta, alpha);
-u_p = hash_to_bins(x, outer, sigma, 1, b, B, delta, alpha);
+u = hash_to_bins(x, X_p, sigma, 0, b, B, delta, alpha);
+u_p = hash_to_bins(x, X_p, sigma, 1, b, B, delta, alpha);
 
 w = zeros(size(x));
 

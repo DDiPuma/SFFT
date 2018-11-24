@@ -1,22 +1,24 @@
-function result = hash_to_bins(x, outer, sigma, a, b, B, delta, alpha)
+function U = hash_to_bins(x, X_p, sigma, a, b, B, delta, alpha)
 
 n = size(x);
-y = zeros(size(x));
-y_p = zeros(size(x));
-u = zeros(size(x));
+Y = zeros(size(x));
+Y_p = zeros(size(x));
+U = zeros(size(x));
 
 % Note - jn/B is an integer provided that B is a power of 2
 
 for j=1:B
-    y(mod(j*n/B, n)) = window(B, alpha, delta) .* permute(sigma, a, b, x);
+   Y(mod(j*n/B, n)) = window(B, alpha, delta) .* permute(sigma, a, b, x);
 end
 
 for j=1:B
-    y_p(mod(j*n/B, n)) = y(mod(j*n/B, n)) - % TODO
+    g, G_p = window(B, alpha, delta);
+    % TODO - check that permuting X_p is the correct notation here
+    Y_p(mod(j*n/B, n)) = Y(mod(j*n/B, n)) - conv(G_p, permute(sigma, a, b, X_p));
 end
 
 for j=1:B
-    u(j) = y_p(mod(j*n/B, n))
+    U(j) = Y_p(mod(j*n/B, n))
 end
 
 end
