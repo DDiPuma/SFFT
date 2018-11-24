@@ -1,7 +1,7 @@
 function result = noiseless_sparse_fft_inner(x, kp, outer, alpha)
 % Compute the inner rounds of an SFFT
 
-Beta = 1e-9;
+Beta = 1e-4;
 n = size(x);
 L = n;
 
@@ -21,11 +21,7 @@ J = find(u > 0.5);
 
 for j=J
     a = u(j)/u_p(j);
-    % TODO - check sigma^-1
-    % By my understanding, that should not be an integer
-    % That's going to be a problem in about 2 lines
-    % I assume inverse has some other meaning in modulo arithmetic
-    i = sigma^-1 * mod(round(arg(a)*n/(2*pi)), n);
+    i = mod(modular_inverse(sigma, n) * round(arg(a)*n/(2*pi)), n);
     v = round(u(j));
     w(i) = v
 end
