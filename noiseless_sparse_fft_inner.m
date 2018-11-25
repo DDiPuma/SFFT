@@ -11,7 +11,7 @@ Beta = kp*2^-(log2(n)-6);
 B = kp/Beta;
 delta = 1/(4*n^2*L);
 
-rng(0, 'twister');
+rng(0, 'simdTwister');
 sigma = 2*randi([0 n/2-1], 1, 1) + 1;
 b = randi([1 n], 1, 1);
 
