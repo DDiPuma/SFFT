@@ -25,6 +25,8 @@ title('Hboxcar')
 Fhat_gaussian = conv(fft(G_gaussian), H_boxcar);
 Fhat_cheby = conv(fft(G_cheby), H_boxcar);
 figure;
+Fhat_gaussian = fftshift(Fhat_gaussian);
+Fhat_cheby = fftshift(Fhat_cheby);
 stem(abs(Fhat_gaussian))
 title('Fhatgaussian')
 figure;
