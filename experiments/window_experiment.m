@@ -13,8 +13,9 @@ f = g.*h;
 F = fft(f);
 
 figure;
-title("Frequency Response of Achieved Filter");
 plot(abs(F));
+title("Frequency Response of Achieved Filter");
 figure;
-title("Impulse Response of Achieved Filter");
 plot(abs(f));
+title("Impulse Response of Achieved Filter");
+
