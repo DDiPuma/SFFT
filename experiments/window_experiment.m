@@ -1,23 +1,20 @@
-n = 8192;
-B = 32;
+n = 2^7;
+B = 2^2;
 
-delta = 1e-3;
+H = [ones(n/B, 1); zeros(n-n/B, 1)];
+h = ifft(H);
 
-alpha = 0.25;
+sigma = B*sqrt(log(n));
 
-C = (1-alpha/2)/(2*B);
-sigma = (4*B/alpha)*sqrt(2*log(n/delta));
+g = gausswin(n, 1/sigma);
+G = fft(g);
 
-num_ones = floor(abs(n*(C - sqrt(2*log(n/delta))/sigma)));
+f = g.*h;
+F = fft(f);
 
-num_zeros = n - ceil(abs(n*(C + sqrt(2*log(n/delta))/sigma)));
-
-% Initialize the ones where they need to be
-% Put zeros everywhere else
-G_p = [ones(num_ones, 1);
-    zeros(n - num_ones, 1)];
-
-% Now fill in the CDF values everywhere else
-for i=(num_ones+1):(n-num_zeros)
-    G_p(i) = cdf('Normal', sigma*(i+C)/n, 0, sigma) - cdf('Normal', sigma*(i-C)/n, 0, sigma);
-end
+figure;
+title("Frequency Response of Achieved Filter");
+plot(abs(F));
+figure;
+title("Impulse Response of Achieved Filter");
+plot(abs(f));
