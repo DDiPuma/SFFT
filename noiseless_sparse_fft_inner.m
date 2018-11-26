@@ -1,7 +1,7 @@
 function result = noiseless_sparse_fft_inner(x, kp, X_p, alpha)
 % Compute the inner rounds of an SFFT
 
-n = size(x);
+n = length(x);
 L = n;
 
 % Choose Beta such that B is a power of 2
@@ -18,15 +18,15 @@ b = randi([1 n], 1, 1);
 u = hash_to_bins(x, X_p, sigma, 0, b, B, delta, alpha);
 u_p = hash_to_bins(x, X_p, sigma, 1, b, B, delta, alpha);
 
-w = zeros(size(x));
+w = zeros(size(X_p));
 
 J = find(u > 0.5);
 
 for j=J
     a = u(j)/u_p(j);
-    i = mod(modular_inverse(sigma, n) * round(arg(a)*n/(2*pi)), n);
+    idx = mod(modular_inverse(sigma, n) * round(arg(a)*n/(2*pi)), n);
     v = round(u(j));
-    w(i) = v
+    w(idx+1) = v;
 end
 
 result = w;

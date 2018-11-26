@@ -1,4 +1,4 @@
-function g, G_p = window(B, n, delta, alpha)
+function g, G_p] = window(B, n, delta, alpha)
 % Compute a window and its Fourier transform
 % B is bandwidth, delta is error tolerance
 
