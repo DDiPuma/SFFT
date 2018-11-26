@@ -1,4 +1,4 @@
-function permuted = permute(sigma, a, b, x)
+function permuted = permute_signal(sigma, a, b, x)
 
 n = size(x);
 permuted = zeros(size(x));

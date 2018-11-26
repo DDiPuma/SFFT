@@ -5,8 +5,8 @@ n = size(x);
 L = n;
 
 % Choose Beta such that B is a power of 2
-% Note that this restricts n to fairly 2^7 or higher to have meaningful bins
-Beta = kp*2^-(log2(n)-6);
+% Note that this restricts n to roughly 2^8 or higher to have meaningful bins
+Beta = kp*2^-(floor(log2(n)-6));
 
 B = kp/Beta;
 delta = 1/(4*n^2*L);
