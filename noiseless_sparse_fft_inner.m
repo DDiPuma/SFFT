@@ -6,7 +6,7 @@ L = n;
 
 % Choose Beta such that B is a power of 2
 % Note that this restricts n to roughly 2^8 or higher to have meaningful bins
-Beta = kp*2^-(floor(log2(n)-6));
+Beta = kp/(2^(floor(log2(n)-5)));
 
 B = kp/Beta;
 delta = 1/(4*n^2*L);
@@ -15,20 +15,20 @@ rng(0, 'simdTwister');
 sigma = 2*randi([0 n/2-1], 1, 1) + 1;
 b = randi([1 n], 1, 1);
 
-u = hash_to_bins(x, X_p, sigma, 0, b, B, delta, alpha);
-u_p = hash_to_bins(x, X_p, sigma, 1, b, B, delta, alpha);
+U = hash_to_bins(x, X_p, sigma, 0, b, B, delta, alpha);
+U_p = hash_to_bins(x, X_p, sigma, 1, b, B, delta, alpha);
 
-w = zeros(size(X_p));
+W = zeros(size(X_p));
 
-J = find(u > 0.5);
+J = find(abs(U) > 0.5);
 
-for j=J
-    a = u(j)/u_p(j);
-    idx = mod(modular_inverse(sigma, n) * round(arg(a)*n/(2*pi)), n);
-    v = round(u(j));
-    w(idx+1) = v;
+for j_idx=J
+    a = U(j_idx)./U_p(j_idx);
+    idx = mod(modular_inverse(sigma, n) * round(angle(a)*n/(2*pi)), n);
+    v = round(U(j_idx));
+    W(idx+1) = v;
 end
 
-result = w;
+result = W;
 
 end
