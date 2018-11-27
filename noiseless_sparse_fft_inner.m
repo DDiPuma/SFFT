@@ -6,12 +6,11 @@ L = n;
 
 % Choose Beta such that B is a power of 2
 % Note that this restricts n to roughly 2^8 or higher to have meaningful bins
-Beta = kp/(2^(floor(log2(n)-5)));
+Beta = kp/(2^(floor(log2(n)-4)));
 
 B = kp/Beta;
 delta = 1/(4*n^2*L);
 
-rng(0, 'simdTwister');
 sigma = 2*randi([0 n/2-1], 1, 1) + 1;
 b = randi([1 n], 1, 1);
 
@@ -24,9 +23,10 @@ J = find(abs(U) > 0.5);
 
 for j_idx=J
     a = U(j_idx)./U_p(j_idx);
-    idx = mod(modular_inverse(sigma, n) * round(angle(a)*n/(2*pi)), n);
+    % +1 accounts for MATLAB being 1-indexed, while modulus is 0-indexed
+    idx = mod(modular_inverse(sigma, n) * round(angle(a)*n/(2*pi)), n) + 1;
     v = round(U(j_idx));
-    W(idx+1) = v;
+    W(idx) = v;
 end
 
 result = W;

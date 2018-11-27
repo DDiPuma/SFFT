@@ -10,15 +10,19 @@ y = zeros(B, 1);
 
 permuted = permute_signal(sigma, a, b, x);
 
+% This stage basically looks for the signal that is
+% in the "active" bin
 for j=1:B
    y(j) = g(j*n/B) * permuted(j*n/B);
 end
 
+% We FFT that signal, which is only length B
 Y = fft(y);
 
-% TODO - We need the FFT of the permutation of x_p, I think
-% Of course, the paper's notation is nebulous as always
 c = conv(G_p, permute_signal(sigma, a, b, X_p));
+
+% Now, we subtract out the part of the bin that
+% has already been estimated
 for j=1:B
     Y_p(j) = Y(j) - c(j*n/B);
 end
